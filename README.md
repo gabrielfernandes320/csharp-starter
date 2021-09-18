@@ -1,0 +1,1 @@
+# csharp-template-v1.0
