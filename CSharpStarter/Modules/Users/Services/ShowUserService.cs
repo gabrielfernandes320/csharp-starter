@@ -1,21 +1,22 @@
 ﻿using CSharpStarter.Modules.Users.Infra.Ef.Entities;
 using CSharpStarter.Modules.Users.Interfaces;
 using CSharpStarter.Shared.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CSharpStarter.Modules.Users.Services
 {
-    public class CreateUserService : ICreateUserService
+    public class ShowUserService : IShowUserService
     {
         private readonly IUsersRepository _usersRepository = null; 
-        public CreateUserService(IUsersRepository usersRepository)
+        public ShowUserService(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
         }
 
-        public Task<User> Execute(User entity)
+        public async Task<User> Execute(int id)
         {
-            return _usersRepository.Create(entity);
+            return await _usersRepository.FindById(id);
         }
     }
 }

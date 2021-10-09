@@ -36,6 +36,10 @@ namespace CSharpStarter
         public void AddServices(IServiceCollection services)
         {
             services.AddScoped<ICreateUserService, CreateUserService>();
+            services.AddScoped<IUpdateUserService, UpdateUserService>();
+            services.AddScoped<IDeleteUserService, DeleteUserService>();
+            services.AddScoped<IListUserService, ListUserService>();
+            services.AddScoped<IShowUserService, ShowUserService>();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

@@ -2,7 +2,6 @@
 using CSharpStarter.Modules.Users.Interfaces;
 using CSharpStarter.Shared.Infra.Ef.Contexts;
 using CSharpStarter.Shared.Infra.Ef.Repositories;
-using System.Threading.Tasks;
 using System.Linq;
 
 namespace CSharpStarter.Modules.Users.Infra.Ef.Repositories

@@ -3,7 +3,7 @@ using CSharpStarter.Shared.Interfaces;
 
 namespace CSharpStarter.Modules.Users.Interfaces
 {
-    public interface ICreateUserService : IService<User>
+    public interface IUpdateUserService : IService<int, User, User>
     {
     }
 }

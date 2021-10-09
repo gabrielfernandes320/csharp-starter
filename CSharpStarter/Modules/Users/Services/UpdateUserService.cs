@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 
 namespace CSharpStarter.Modules.Users.Services
 {
-    public class CreateUserService : ICreateUserService
+    public class UpdateUserService : IUpdateUserService
     {
         private readonly IUsersRepository _usersRepository = null; 
-        public CreateUserService(IUsersRepository usersRepository)
+        public UpdateUserService(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
         }
 
-        public Task<User> Execute(User entity)
+        public Task<User> Execute(int param, User entity)
         {
-            return _usersRepository.Create(entity);
+            return _usersRepository.Update(param, entity);
         }
     }
 }

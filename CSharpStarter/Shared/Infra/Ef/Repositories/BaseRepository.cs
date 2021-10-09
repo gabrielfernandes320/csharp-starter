@@ -33,7 +33,7 @@ namespace CSharpStarter.Shared.Infra.Ef.Repositories
             return await FindById(createdEntity.Entity.Id);
         }
 
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             entities.Remove(await FindById(id));
             await _context.SaveChangesAsync();
@@ -49,7 +49,7 @@ namespace CSharpStarter.Shared.Infra.Ef.Repositories
             return await entities.SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<T> Update(T entity)
+        public async Task<T> Update(int id, T entity)
         {
             var updatedEntity = entities.Update(entity);
             await _context.SaveChangesAsync();

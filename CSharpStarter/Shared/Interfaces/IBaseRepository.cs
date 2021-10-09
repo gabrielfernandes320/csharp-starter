@@ -8,7 +8,7 @@ namespace CSharpStarter.Shared.Infra.Ef.Repositories
         public Task<ICollection<T>> FindAll();
         public Task<T> FindById(int id);
         public Task<T> Create(T entity);
-        public Task<T> Update(T product);
-        public void Delete(int id);
+        public Task<T> Update(int id, T entity);
+        public Task Delete(int id);
     }
 }
