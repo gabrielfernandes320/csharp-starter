@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System;
+using CSharpStarter.Shared.Exceptions;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CSharpStarter.Shared.Infra.Ef.Repositories
@@ -35,6 +36,13 @@ namespace CSharpStarter.Shared.Infra.Ef.Repositories
 
         public async Task Delete(int id)
         {
+            var entity = await entities.FindAsync(id);
+
+            if(entity == null)
+            {
+                throw new NotFoundException();
+            }
+
             entities.Remove(await FindById(id));
             await _context.SaveChangesAsync();
         }

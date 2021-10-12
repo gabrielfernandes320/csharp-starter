@@ -36,15 +36,15 @@ namespace CSharpStarter.Modules.Users.Infra.Http
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public async Task<ICollection<User>> GetAsync()
+        public async Task<object> GetAsync()
         {
-            var users = await _listUserService.Execute(new {id = 1});
-            return users;
+                var users = await _listUserService.Execute(new { id = 1 });
+                return users;   
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public async Task<object> GetAsync(int id)
+        public async Task<ActionResult> GetAsync(int id)
         {
             var user = await _showUserService.Execute(id);
             return Ok(user);
@@ -69,9 +69,17 @@ namespace CSharpStarter.Modules.Users.Infra.Http
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public async Task DeleteAsync(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            await _deleteUserService.Execute(id);
+            //try
+            //{
+                await _deleteUserService.Execute(id);
+                return Ok();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return NotFound(new {statusCode = 404, message = "Entity not found" });
+            //}
         }
     }
 }

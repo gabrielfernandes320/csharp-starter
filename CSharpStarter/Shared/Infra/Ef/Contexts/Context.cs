@@ -13,36 +13,55 @@ namespace CSharpStarter.Shared.Infra.Ef.Contexts
         public Context(DbContextOptions<Context> options)
         : base(options)
         { }
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasQueryFilter(p => p.DeletedAt == null);
+        }
+
 
         public override int SaveChanges()
         {
-            AddTimestamps();
+            UseUpdatedAndCreatedAt();
+            UseSoftDelete();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            AddTimestamps();
-            return base.SaveChangesAsync();
+            UseUpdatedAndCreatedAt();
+            UseSoftDelete();
+            return base.SaveChangesAsync(cancellationToken);
         }
 
-        private void AddTimestamps()
+        private void UseUpdatedAndCreatedAt()
         {
             var entities = ChangeTracker.Entries()
                 .Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
             foreach (var entity in entities)
             {
-                var now = DateTime.UtcNow; // current datetime
-
                 if (entity.State == EntityState.Added)
                 {
-                    ((BaseEntity)entity.Entity).CreatedAt = now;
+                    ((BaseEntity)entity.Entity).CreatedAt = DateTime.UtcNow; 
                 }
-                ((BaseEntity)entity.Entity).UpdatedAt = now;
+                ((BaseEntity)entity.Entity).UpdatedAt = DateTime.UtcNow;
             }
         }
 
-        public DbSet<User> Users { get; set; }
+        private void UseSoftDelete()
+        {
+            var entities = ChangeTracker.Entries()
+               .Where(e => e.State == EntityState.Deleted &&
+               e.Metadata.GetProperties().Any(x => x.Name == "DeletedAt"));
+
+            foreach (var item in entities)
+            {
+                item.State = EntityState.Unchanged;
+                item.CurrentValues["DeletedAt"] = DateTime.UtcNow;
+            }
+        }
+
     }
 }

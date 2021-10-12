@@ -1,9 +1,12 @@
 using CSharpStarter.Modules.Users.Infra.Ef.Repositories;
 using CSharpStarter.Modules.Users.Interfaces;
 using CSharpStarter.Modules.Users.Services;
+using CSharpStarter.Shared.Extensions;
 using CSharpStarter.Shared.Infra.Ef.Contexts;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +72,8 @@ namespace CSharpStarter
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CSharpStarter v1"));
             }
 
+            app.ConfigureExceptionHandler();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -79,6 +84,15 @@ namespace CSharpStarter
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseExceptionHandler(c => c.Run(async context =>
+            //{
+            //    var exception = context.Features
+            //        .Get<IExceptionHandlerPathFeature>()
+            //        .Error;
+            //    var response = new { error = exception.Message };
+            //    await context.Response.WriteAsJsonAsync(response);
+            //}));
         }
     }
 }
