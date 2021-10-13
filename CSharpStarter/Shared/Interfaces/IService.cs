@@ -17,6 +17,6 @@ namespace CSharpStarter.Shared.Interfaces
         public Task<R> Execute(P param, T entity);
     }
 
-    
+
 
 }

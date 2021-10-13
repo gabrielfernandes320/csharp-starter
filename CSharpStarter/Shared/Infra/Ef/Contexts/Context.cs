@@ -12,14 +12,15 @@ namespace CSharpStarter.Shared.Infra.Ef.Contexts
     {
         public Context(DbContextOptions<Context> options)
         : base(options)
-        { }
+        {
+
+        }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasQueryFilter(p => p.DeletedAt == null);
         }
-
 
         public override int SaveChanges()
         {
@@ -44,7 +45,7 @@ namespace CSharpStarter.Shared.Infra.Ef.Contexts
             {
                 if (entity.State == EntityState.Added)
                 {
-                    ((BaseEntity)entity.Entity).CreatedAt = DateTime.UtcNow; 
+                    ((BaseEntity)entity.Entity).CreatedAt = DateTime.UtcNow;
                 }
                 ((BaseEntity)entity.Entity).UpdatedAt = DateTime.UtcNow;
             }
